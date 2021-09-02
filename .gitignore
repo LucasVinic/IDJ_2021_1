@@ -1,0 +1,13 @@
+*.d
+*.o
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+*.exe
+*.out
+*.app
+
+.vscode
