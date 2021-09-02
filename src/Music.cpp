@@ -16,17 +16,18 @@ Music::Music(string file) {
   Open(file);
 };
 
-void Music::Play(-1) {
-  Mix_PlayMusic(music, -1);
+void Music::Play(int times) {
+  Mix_PlayMusic(music, times);
 }
 
 void Music::Stop(int ms) {
-   Mix_FadeOutMusic(ms);
+  Mix_FadeOutMusic(ms);
 }
 
 void Music::Open(string file) {
-  if(file != nullptr)
-    Mix_LoadMUS(file);
+  music = Mix_LoadMUS(file.c_str());
+  if(music == nullptr)
+    printf("deu ruim")
 }
 
 bool Music::IsOpen() {

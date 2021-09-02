@@ -15,6 +15,7 @@ class Music {
   public:
     Music();
     Music(string file);
+    ~Music();
     void Play(int times);
     void Stop(int msToStop);
     void Open(string file);
@@ -22,13 +23,3 @@ class Music {
 };
 
 #endif
-
-/*
-+ Music()
-+ Music(file : std::string)
-+ Play (times : int = -1) : void
-+ Stop (msToStop : int = 1500) : void
-+ Open (file : std::string) : void
-+ IsOpen () : bool
-- music : Mix_Music*
-*/

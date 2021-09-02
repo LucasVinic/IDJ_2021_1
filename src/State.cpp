@@ -8,9 +8,9 @@
 
 using namespace std;
 
-bool State::quitRequested = false;
-
-State::State() {}
+State::State():bg(), music() {
+  quitRequested = false;
+}
 
 void State::LoadAssets() {
 
