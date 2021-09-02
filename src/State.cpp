@@ -1,5 +1,7 @@
+#include "SDL.h"
 #include "SDL_image.h"
 #include "SDL_mixer.h"
+#include "SDL_ttf.h"
 #include "State.h"
 #include <string>
 #include <stdio.h>
@@ -8,7 +10,7 @@ using namespace std;
 
 bool State::quitRequested = false;
 
-State::State() {};
+State::State() {}
 
 void State::LoadAssets() {
 
