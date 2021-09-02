@@ -53,15 +53,21 @@ Game::~Game(){
   SDL_Quit();
 }
 
-/* State& Game::GetState(){
+State& Game::GetState(){
   return *state;
-} */
+}
 
 SDL_Renderer* Game::GetRenderer(){
   return renderer;
 }
 
 void Game::Run(){
-  
+  while(State::QuitRequested()){
+    State::Update();
+    State::Render();
+
+    SDL_RenderPresent();
+    SDL_Delay(33);
+  } 
 }
 

@@ -15,15 +15,14 @@ class Game {
     static Game* instance;
     SDL_Window* window;
     SDL_Renderer* renderer;
-    /* State* state; */
+    State* state;
 
   public: 
     ~Game ();
     void Run();
     SDL_Renderer* GetRenderer();
-    /* State& GetState(); */
+    State& GetState();
     static Game& GetInstance();
-
 
 };
 #endif
