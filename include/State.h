@@ -1,5 +1,5 @@
-#ifndef state
-#define state
+#ifndef state_h
+#define state_h
 #include "SDL.h"
 #include "SDL_image.h"
 #include "SDL_mixer.h"
@@ -14,8 +14,8 @@ using namespace std;
 class State {
   private: 
     Sprite bg;
-    Musica music;
-    bool quitRequested
+    Music music;
+    bool quitRequested;
 
   public:
     State();

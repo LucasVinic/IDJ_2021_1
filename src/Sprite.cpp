@@ -3,17 +3,18 @@
 #include "SDL_mixer.h"
 #include "SDL_ttf.h"
 #include "Sprite.h"
+#include "Game.h"
 #include <string>
 #include <stdio.h>
 
 using namespace std;
 
 Sprite::Sprite(){
-  SDL_Texture* texture = nullptr;
+  texture = nullptr;
 }
 
 Sprite::Sprite(string file){
-  SDL_Texture* texture = nullptr;
+  texture = nullptr;
   Open(file);
 }
 
@@ -27,18 +28,29 @@ void Sprite::Open(string file){
   if(texture != nullptr){
     SDL_DestroyTexture(texture);
   }
-
-  if(IMG_LoadTexture(Game::renderer, file) == nullptr){
-    printf("deu ruim load texture");
-  }else{
-    SDL_QueryTexture(Game::renderer, nullptr, nullptr, &width, &height);
-    SetClip(0, 0, width, height);
+  texture = IMG_LoadTexture(Game::GetInstance().GetRenderer(), file.c_str());
+  if(texture == nullptr){
+    printf("deu ruim load texture, %s\n", IMG_GetError());
   }
+  SDL_QueryTexture(texture, nullptr, nullptr, &width, &height);
+  SetClip(0, 0, width, height);
+}
+
+void Sprite::SetClip(int x, int y, int w, int h){
+  clipRect.x = x;
+  clipRect.y = y;
+  clipRect.w = w;
+  clipRect.h = h;
 }
 
 void Sprite::Render(int x, int y){
-  SDL_Rect* dstrect = 
-  SDL_RenderCopy(Game::renderer, texture, clipRect, )
+  SDL_Rect dstrect;
+  dstrect.x = x;
+  dstrect.y = y;
+  dstrect.h = clipRect.h;
+  dstrect.w = clipRect.h;
+  
+  SDL_RenderCopy(Game::GetInstance().GetRenderer(), texture, &clipRect, &dstrect);
 }
 
 int Sprite::GetWidth(){

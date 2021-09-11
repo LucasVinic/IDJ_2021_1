@@ -14,7 +14,7 @@ Music::Music() {
 
 Music::Music(string file) { 
   Open(file);
-};
+}
 
 void Music::Play(int times) {
   Mix_PlayMusic(music, times);
@@ -27,7 +27,8 @@ void Music::Stop(int ms) {
 void Music::Open(string file) {
   music = Mix_LoadMUS(file.c_str());
   if(music == nullptr)
-    printf("deu ruim")
+    printf("deu ruim music\n");
+  Play(1);
 }
 
 bool Music::IsOpen() {

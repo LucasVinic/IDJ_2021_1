@@ -8,12 +8,11 @@
 
 using namespace std;
 
-State::State():bg(), music() {
+State::State():bg("assets/img/ocean.jpg"), music("assets/music/stageState.ogg") {
   quitRequested = false;
 }
 
 void State::LoadAssets() {
-
 }
 
 void State::Update(float dt) {
@@ -23,7 +22,7 @@ void State::Update(float dt) {
 }
  
 void State::Render() {
-
+  bg.Render(0.00, 0.00);
 }
 
 bool State::QuitRequested() {

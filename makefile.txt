@@ -10,7 +10,7 @@ RM = rm -f
 
 #Flags para geração automática de dependências
 DEP_FLAGS = -MT $@ -MMD -MP -MF $(DEP_PATH)/$.d
-LIBS = -LC:/SDL2/bin -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf -lm
+LIBS = -LC:/TDM-GCC-64/include/SDL2/bin -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf -lm
 FLAGS= -std=c++11 -Wall -pedantic -Wextra -fmax-errors=5 -fdiagnostics-color
 #FLAGS= -std=c++11 -Wall -pedantic -Wextra -fmax-errors=5
 
@@ -25,7 +25,7 @@ OBJ_FILES= $(addprefix $(BIN_PATH)/,$(notdir $(CPP_FILES:.cpp=.o)))
 DEP_FILES = $(wildcard $(DEP_PATH)/*.d)
 
 #Nome do executável
-EXEC = Jogo
+EXEC = JOGO
 
 #-------------------------------------------------------------
 #Caso o sistema seja windows
@@ -37,7 +37,7 @@ RMDIR= rd /s /q
 RM = del
 
 #path da SDL
-SDL_PATH = C:/SDL2
+SDL_PATH = C:/Tools/msys64/mingw64
 INC_PATH += -I$(SDL_PATH)/include/SDL2
 FLAGS = -mwindows
 LIBS := -lmingw32 -lSDL2main $(LIBS)
