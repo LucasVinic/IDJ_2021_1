@@ -32,12 +32,12 @@ Game::Game(string title, int width, int height){
       printf("deu ruim SDL Init\n");
     }else{
       IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG | IMG_INIT_TIF);
+      window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, 0);
+      renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+
       Mix_Init(MIX_INIT_OGG);
       Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024);
       Mix_AllocateChannels(32);
-
-      window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, 0);
-      renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
       if(window == nullptr || renderer == nullptr){
         printf("deu ruim window == null || renderer == null\n");
@@ -65,7 +65,7 @@ SDL_Renderer* Game::GetRenderer(){
 }
 
 void Game::Run(){
-  while(GetState().QuitRequested()){
+  while(!GetState().QuitRequested()){
     GetState().Update(33);
     GetState().Render();
 
