@@ -36,9 +36,9 @@ float Vec2::Distancia (Vec2 vetor) {
 }
 
 // desenvolvimento
-float Vec2::Angulo () {}
+/* float Vec2::Angulo () {}
 
 float Vec2::Angulo2Pontos (Vec2 vetor) {}
 
-Vec2 Vec2::Rotacao () {}
+Vec2 Vec2::Rotacao () {} */
 

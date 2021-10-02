@@ -6,6 +6,8 @@
 #include "SDL_ttf.h"
 #include <string>
 
+#include "Vec2.h"
+
 using namespace std;
 
 class Rect {
@@ -14,7 +16,11 @@ class Rect {
     float y;
     float w;
     float h;
-    Rect(float x, float y, float w, float h);
+    Rect (float x, float y, float w, float h);
+    Vec2 Center ();
+    Vec2 Center2Rect (Rect retangulo);
+    bool isDotInRect (Vec2 vetor);
+    Rect SumRectVec (Vec2 vetor);
 };
 
 #endif

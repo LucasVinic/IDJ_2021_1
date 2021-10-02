@@ -16,9 +16,9 @@ class Vec2 {
     float Magnitude ();
     Vec2 VetorNorm ();
     float Distancia (Vec2 vetor);
-    float Angulo ();
+   /*  float Angulo ();
     float Angulo2Pontos (Vec2 vetor);
-    Vec2 Rotacao ();
+    Vec2 Rotacao (); */
     
 };
 
