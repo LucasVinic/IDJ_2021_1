@@ -6,9 +6,11 @@
 #include "SDL_ttf.h"
 #include <string>
 
+#include "Component.h"
+
 using namespace std;
 
-class Sprite {
+class Sprite: Component {
   private: 
     SDL_Texture* texture;
     int width;
