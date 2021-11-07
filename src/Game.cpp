@@ -4,7 +4,7 @@
 #include "SDL_ttf.h"
 #include "Game.h"
 #include <string>
-#include <stdio.h>
+#include <iostream>
 
 using namespace std;
 
@@ -66,7 +66,8 @@ SDL_Renderer* Game::GetRenderer(){
 
 void Game::Run(){
   while(!GetState().QuitRequested()){
-    GetState().Update(33);
+    cout << "game run porra\n";
+    GetState().Update(33.0);
     GetState().Render();
 
     SDL_RenderPresent(renderer);

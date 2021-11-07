@@ -4,31 +4,35 @@
 #include "SDL_ttf.h"
 #include "Sprite.h"
 #include "GameObject.h"
+#include "Component.h"
 #include <string>
-#include <stdio.h>
+#include <vector>
+#include <memory>
+#include <iostream>
 
 using namespace std;
 
-GameObject::GameObject(){
+GameObject::GameObject(): box(0,0,0,0){
   isDead = false;
 }
 
 GameObject::~GameObject(){
-  for (int i = 0; i < components.size(); i++){
-    delete components[i];
+  for (auto it = 0; it < components.size(); it++){
+    components.at(it).reset();
   }
+  components.clear();
 }
 
 void GameObject::Update(float dt){
-  for (int i = 0; i < components.size(); i++){
-    Update(dt);
+  for (const auto& component : components){
+    cout << "game object uptade for porra\n";
+    component->Update(dt);
   }
 }
 
 void GameObject::Render(){
-  for (int i = 0; i < components.size(); i++){
-    Render();
-  }
+  for (const auto& component : components)
+    component->Render();
 }
 
 bool GameObject::IsDead(){
@@ -40,13 +44,13 @@ void GameObject::RequestDelete(){
 }
 
 void GameObject::AddComponent(Component* cpt){
-  components.push_back(cpt);
+  components.push_back(unique_ptr<Component>(cpt));
 }
 
 void GameObject::RemoveComponent(Component* cpt){
   for (int i = 0; i < components.size(); i++){
-    if (components[i] == cpt){
-      components.erase(i);
+    if (components.at(1).get() == cpt){
+      components.at(i).reset();
       break;
     }
   }
@@ -54,8 +58,8 @@ void GameObject::RemoveComponent(Component* cpt){
 
 Component* GameObject::GetComponent(string type){
   for (int i = 0; i < components.size(); i++){
-    if(components[i].Is(type)){
-      return components[i];
+    if(components.at(1)->Is(type)){
+      return components.at(1).get();
     }
   }
   return nullptr;

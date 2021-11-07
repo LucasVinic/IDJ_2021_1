@@ -5,7 +5,8 @@
 #include "SDL_mixer.h"
 #include "SDL_ttf.h"
 #include <string>
-
+#include <memory>
+#include <vector>
 #include "Rect.h"
 #include "Component.h"
 
@@ -13,7 +14,7 @@ using namespace std;
 
 class GameObject {
   private:
-    vector <Component*> components;
+    vector<unique_ptr<Component>> components;
     bool isDead;
 
   public:
@@ -30,3 +31,4 @@ class GameObject {
 
     Rect box;
 };
+#endif

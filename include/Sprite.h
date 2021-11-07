@@ -5,7 +5,6 @@
 #include "SDL_mixer.h"
 #include "SDL_ttf.h"
 #include <string>
-
 #include "Component.h"
 
 using namespace std;
@@ -23,11 +22,12 @@ class Sprite: Component {
     Sprite(string file);
     void Open(string file);
     void SetClip(int x, int y, int w, int h);
-    void Render(int x, int y);
+    void Render();
     int GetWidth();
     int GetHeight();
     bool IsOpen();
-    
+    void Update();
+    bool Is(string type);
 };
 
 #endif

@@ -33,3 +33,11 @@ bool Rect::isDotInRect (Vec2 vetor) {
 Rect Rect::SumRectVec (Vec2 vetor) {
   return Rect(x + vetor.x, y + vetor.y, w, h);
 }
+
+bool Rect::contains(int x, int y) { return this->contains((float) x, (float) y); }
+bool Rect::contains(float x, float y) { return this->contains(Vec2(x, y)); }
+bool Rect::contains(Vec2 point) {
+  bool withinY = (point.y >= this->y) && (point.y <= this->y + this->h);
+  bool withinX = (point.x >= this->x) && (point.x <= this->x + this->w);
+  return withinX && withinY;
+}

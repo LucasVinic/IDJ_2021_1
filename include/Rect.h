@@ -21,6 +21,10 @@ class Rect {
     Vec2 Center2Rect (Rect retangulo);
     bool isDotInRect (Vec2 vetor);
     Rect SumRectVec (Vec2 vetor);
+
+    bool contains(int x, int y);
+    bool contains(float x, float y);
+    bool contains(Vec2 point);
 };
 
 #endif
