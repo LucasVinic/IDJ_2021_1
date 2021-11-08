@@ -6,6 +6,7 @@
 #include "SDL_ttf.h"
 #include <string>
 #include "Component.h"
+#include "GameObject.h"
 
 using namespace std;
 
@@ -17,9 +18,9 @@ class Sprite: Component {
     SDL_Rect clipRect;
 
   public:
-    Sprite();
+    Sprite(GameObject& associated);
+    Sprite(GameObject& associated, string file);
     ~Sprite();
-    Sprite(string file);
     void Open(string file);
     void SetClip(int x, int y, int w, int h);
     void Render();

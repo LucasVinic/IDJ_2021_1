@@ -25,14 +25,19 @@ GameObject::~GameObject(){
 
 void GameObject::Update(float dt){
   for (const auto& component : components){
-    cout << "game object uptade for porra\n";
     component->Update(dt);
   }
 }
 
 void GameObject::Render(){
-  for (const auto& component : components)
+  auto compSize = this->components.size();
+  // cout << "[GO] rendering an object with " << compSize << " components" << endl;
+  for (const auto& component : components) {
+    // cout << "[GO] rendering component... ";
     component->Render();
+    // cout << " done!" << endl;
+  }
+  // cout << "[GO] done rendering all components" << endl;
 }
 
 bool GameObject::IsDead(){

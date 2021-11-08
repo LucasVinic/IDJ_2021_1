@@ -66,9 +66,12 @@ SDL_Renderer* Game::GetRenderer(){
 
 void Game::Run(){
   while(!GetState().QuitRequested()){
-    cout << "game run porra\n";
+    // cout << "[GAME] update starting" << endl;
     GetState().Update(33.0);
+    // cout << "[GAME] update done" << endl;
+    // cout << "[GAME] render starting" << endl;
     GetState().Render();
+    // cout << "[GAME] render done" << endl;
 
     SDL_RenderPresent(renderer);
     SDL_Delay(33);

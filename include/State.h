@@ -11,7 +11,7 @@ using namespace std;
 
 class State {
   private: 
-    Sprite bg;
+    Sprite* bg;
     Music music;
     bool quitRequested;
     vector<unique_ptr<GameObject>> objectArray;

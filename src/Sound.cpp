@@ -40,7 +40,7 @@ Sound::~Sound(){
   }
 }
 
-void Sound::Update(float dt){cout << "fodase sound\n";}
+void Sound::Update(float dt){}
 
 void Sound::Render(){}
 
