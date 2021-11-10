@@ -27,7 +27,7 @@ void Music::Stop(int ms) {
 void Music::Open(string file) {
   music = Mix_LoadMUS(file.c_str());
   if(music == nullptr)
-    printf("deu ruim music\n");
+    printf("deu ruim music, %s\n", Mix_GetError());
   Play(1);
 }
 

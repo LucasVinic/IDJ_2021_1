@@ -3,8 +3,10 @@
 #include "SDL_mixer.h"
 #include "SDL_ttf.h"
 #include "Game.h"
+#include "Resources.h"
 #include <string>
-#include <stdio.h>
+#include <iostream>
+#include <chrono>
 
 using namespace std;
 
@@ -32,12 +34,12 @@ Game::Game(string title, int width, int height){
       printf("deu ruim SDL Init\n");
     }else{
       IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG | IMG_INIT_TIF);
+      window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, 0);
+      renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+
       Mix_Init(MIX_INIT_OGG);
       Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024);
       Mix_AllocateChannels(32);
-
-      window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, 0);
-      renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
       if(window == nullptr || renderer == nullptr){
         printf("deu ruim window == null || renderer == null\n");
@@ -65,12 +67,34 @@ SDL_Renderer* Game::GetRenderer(){
 }
 
 void Game::Run(){
-  while(GetState().QuitRequested()){
-    GetState().Update(33);
-    GetState().Render();
+  auto previous_frame = chrono::steady_clock::now();
+  auto current_frame = previous_frame;
+  while(!GetState().QuitRequested()){
+     // calculate time since last frame and update current and previous frame
+    previous_frame = current_frame;
+    current_frame = chrono::steady_clock::now();
+    auto deltaTime = chrono::duration_cast<chrono::milliseconds>(current_frame - previous_frame);
 
+    // cout << "[GAME] update starting" << endl;
+    GetState().Update((float) deltaTime.count());
+    // cout << "[GAME] update done" << endl;
+    // cout << "[GAME] render starting" << endl;
+    GetState().Render();
+    // cout << "[GAME] render done" << endl;
     SDL_RenderPresent(renderer);
-    SDL_Delay(33);
+
+    auto after_render = chrono::steady_clock::now();
+    auto calc_time = chrono::duration_cast<chrono::milliseconds>(after_render - current_frame);
+    // add one beause 0.9ms get's rounded down to 0ms, and 1ms is better for our use case
+    Uint32 c_time = (Uint32) calc_time.count() + 1;
+    Uint32 frame_delay = c_time >= 33 ? 0 : 33 - c_time;
+
+    // cout << "took " << c_time << "ms to calculate frame. will wait " << frame_delay << "ms until next frame is calculated" << endl;
+    SDL_Delay(frame_delay);
   } 
+
+  Resources::ClearImages();
+  Resources::ClearMusics();
+  Resources::ClearSounds();
 }
 
