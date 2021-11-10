@@ -6,6 +6,8 @@
 #include "Face.h"
 #include "Sound.h"
 #include "Sprite.h"
+#include "TileSet.h"
+#include "TileMap.h"
 #include <iostream>
 
 using namespace std;
@@ -16,6 +18,10 @@ State::State(): music("assets/music/stageState.ogg") {
   this->bg = new Sprite(*bgGO, "assets/img/ocean.png");
   bgGO->AddComponent((Component*) this->bg);
   this->objectArray.emplace_back((unique_ptr<GameObject>) bgGO);
+
+  auto tileMapGO = new GameObject();
+  tileMapGO->AddComponent((Component*) new TileMap(*tileMapGO, string("assets/map/tileMap.txt"), new TileSet(64, 64, "./assets/img/tileset.png")));
+  this->objectArray.emplace_back((unique_ptr<GameObject>) tileMapGO);
 }
 
 State::~State(){
@@ -28,7 +34,7 @@ void State::LoadAssets() {
 void State::Update(float dt) {
   Input();
 
-  cout << "input ok" << endl;
+  //cout << "input ok" << endl;
 
   for(auto i = objectArray.begin(); i != objectArray.end(); i++){
     auto go = i->get();
@@ -42,16 +48,13 @@ void State::Update(float dt) {
       i--;
     }
   }
-  if(SDL_QuitRequested()){
-    quitRequested = true;
-  }
 }
  
 void State::Render() {
   //bg.Render(0.00, 0.00);
   for (auto i = this->objectArray.begin(); i != this->objectArray.end(); i++){
     auto object = i->get();
-    cout << "rendering object." << endl;
+    //cout << "rendering object." << endl;
     object->Render();
   }
 }
@@ -67,7 +70,7 @@ void State::Input(){
 
 	SDL_Event event;
   while (SDL_PollEvent(&event)) {
-    cout << "começou um loop de input\n";
+    //cout << "começou um loop de input\n";
 
     // if event is a quit-type, quit
     if (event.type == SDL_QUIT) this->quitRequested = true;
@@ -81,7 +84,8 @@ void State::Input(){
         if (go->box.contains(mouseX, mouseY)) {
           auto face = (Face*) go->GetComponent("Face");
           auto damage = rand() % 10 + 10;
-          cout << "dei " << damage << " de dano" << endl;
+          // cout << "dei " << damage << " de dano" << endl;
+          // cout << "esse eh o face agora: " << face << endl;
           if (face != nullptr) {
             face->Damage(damage);
             break;
@@ -115,13 +119,15 @@ void State::AddObject(int mouseX, int mouseY){
   // cout << "[State] \ty: " << newGame->box.y << endl;
   // cout << "[State] \tw: " << newGame->box.w << endl;
   // cout << "[State] \th: " << newGame->box.h << endl;
-  Sound* penguinSound = new Sound(*newGame, "assets/audio/boom.wav");
+  Sound* penguinSound = new Sound(*newGame, "assets/music/boom.wav");
 
   Face* penguinFace = new Face(*newGame);
   newGame->AddComponent((Component*) penguinSprite);
   newGame->AddComponent((Component*) penguinSound);
   newGame->AddComponent((Component*) penguinFace);
-
-  //cout << "pelo menos aq sla\n";
+  
+  // cout << "esse eh o face: " << penguinFace << endl;
+  // cout << "esse eh o newgame com o face: " << newGame << endl;
+  
   objectArray.emplace_back(unique_ptr<GameObject>(newGame));
 }

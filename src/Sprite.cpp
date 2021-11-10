@@ -4,6 +4,7 @@
 #include "SDL_ttf.h"
 #include "Sprite.h"
 #include "Game.h"
+#include "Resources.h"
 #include <string>
 #include <iostream>
 
@@ -19,17 +20,10 @@ Sprite::Sprite(GameObject& associated, string file): Sprite(associated) {
   Open(file);
 }
 
-Sprite::~Sprite(){
-  if(texture != nullptr){
-    SDL_DestroyTexture(texture);
-  }
-}
+Sprite::~Sprite(){}
 
 void Sprite::Open(string file){
-  if(texture != nullptr){
-    SDL_DestroyTexture(texture);
-  }
-  texture = IMG_LoadTexture(Game::GetInstance().GetRenderer(), file.c_str());
+  texture = Resources::GetImage(file);
   if(texture == nullptr){
     // cout << "deu ruim load texture na imagem " << file << " erro " << IMG_GetError() << endl;
     return;
@@ -48,17 +42,21 @@ void Sprite::SetClip(int x, int y, int w, int h){
 }
 
 void Sprite::Render(){
+  return this->Render(associated.box.x, associated.box.y, GetHeight(), GetWidth());
+}
+
+void Sprite::Render(int x, int y, int w, int h) {
   // cout << "[Sprite] chegou no render\n";
   SDL_Rect dstrect;
   // cout << "[Sprite] declarou dstrect\n";
   // cout << "associated.box.x " <<  associated.box.x << endl;
-  dstrect.x = associated.box.x;
+  dstrect.x = x;
   // cout << "[Sprite] chegou no associatex box y\n";
-  dstrect.y = associated.box.y;
+  dstrect.y = y;
   // cout << "[Sprite] chegou no associatex box y\n";
-  dstrect.h = GetHeight();
+  dstrect.h = h;
   // cout << "[Sprite] chegou no getHeight\n";
-  dstrect.w = GetWidth();
+  dstrect.w = w;
   // cout << "[Sprite] chegou no getWidth\n";
   SDL_RenderCopy(Game::GetInstance().GetRenderer(), texture, &clipRect, &dstrect);
 }

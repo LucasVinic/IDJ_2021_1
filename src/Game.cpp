@@ -3,8 +3,10 @@
 #include "SDL_mixer.h"
 #include "SDL_ttf.h"
 #include "Game.h"
+#include "Resources.h"
 #include <string>
 #include <iostream>
+#include <chrono>
 
 using namespace std;
 
@@ -65,16 +67,34 @@ SDL_Renderer* Game::GetRenderer(){
 }
 
 void Game::Run(){
+  auto previous_frame = chrono::steady_clock::now();
+  auto current_frame = previous_frame;
   while(!GetState().QuitRequested()){
+     // calculate time since last frame and update current and previous frame
+    previous_frame = current_frame;
+    current_frame = chrono::steady_clock::now();
+    auto deltaTime = chrono::duration_cast<chrono::milliseconds>(current_frame - previous_frame);
+
     // cout << "[GAME] update starting" << endl;
-    GetState().Update(33.0);
+    GetState().Update((float) deltaTime.count());
     // cout << "[GAME] update done" << endl;
     // cout << "[GAME] render starting" << endl;
     GetState().Render();
     // cout << "[GAME] render done" << endl;
-
     SDL_RenderPresent(renderer);
-    SDL_Delay(33);
+
+    auto after_render = chrono::steady_clock::now();
+    auto calc_time = chrono::duration_cast<chrono::milliseconds>(after_render - current_frame);
+    // add one beause 0.9ms get's rounded down to 0ms, and 1ms is better for our use case
+    Uint32 c_time = (Uint32) calc_time.count() + 1;
+    Uint32 frame_delay = c_time >= 33 ? 0 : 33 - c_time;
+
+    // cout << "took " << c_time << "ms to calculate frame. will wait " << frame_delay << "ms until next frame is calculated" << endl;
+    SDL_Delay(frame_delay);
   } 
+
+  Resources::ClearImages();
+  Resources::ClearMusics();
+  Resources::ClearSounds();
 }
 

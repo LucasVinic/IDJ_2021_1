@@ -23,6 +23,7 @@ class Sprite: Component {
     ~Sprite();
     void Open(string file);
     void SetClip(int x, int y, int w, int h);
+    void Render(int x, int y, int w, int h);
     void Render();
     int GetWidth();
     int GetHeight();

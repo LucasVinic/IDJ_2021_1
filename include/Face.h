@@ -12,6 +12,9 @@ using namespace std;
 class Face: Component{
   private:
     int hitpoints;
+    bool isDying;
+    float total_death_time;
+    float death_time;
   
   public:
     Face(GameObject& associated);

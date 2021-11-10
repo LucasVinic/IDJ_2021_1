@@ -5,6 +5,7 @@
 #include "Sound.h"
 #include "GameObject.h"
 #include "Component.h"
+#include "Resources.h"
 #include <string>
 #include <iostream>
 
@@ -30,7 +31,7 @@ void Sound::Stop(){
 }
 
 void Sound::Open(string file){
-  chunk = Mix_LoadWAV(file.c_str());
+  chunk = Resources::GetSound(file);
 }
 
 Sound::~Sound(){

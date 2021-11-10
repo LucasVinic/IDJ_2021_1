@@ -61,10 +61,11 @@ void GameObject::RemoveComponent(Component* cpt){
   }
 }
 
-Component* GameObject::GetComponent(string type){
+Component* GameObject::GetComponent(string type) {
+  //cout << "[GO] tentando pegar componente do tipo " << type << " para o GO " << this << ", de tamanho " << components.size() << endl;
   for (int i = 0; i < components.size(); i++){
-    if(components.at(1)->Is(type)){
-      return components.at(1).get();
+    if(components.at(i)->Is(type)){
+      return components.at(i).get();
     }
   }
   return nullptr;
